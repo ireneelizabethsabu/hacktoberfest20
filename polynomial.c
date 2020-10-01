@@ -1,6 +1,4 @@
 #include<stdio.h>
-#include<stdlib.h>
-
 int main(){
     int N,M,ind=0;
     int arr1[10],arr2[10],arr3[10];
