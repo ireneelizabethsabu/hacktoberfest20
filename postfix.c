@@ -3,41 +3,73 @@
 #include <string.h>
 #include <math.h>
 #include <stdbool.h>
-
 typedef struct {
-    float arr[20];
+    float a[40];
 } Stack;
 
-
 Stack s;
+int top=-1;
 
-void push(float ch ){
-    if(top<19)
-        s.arr[++top]=ch;
+void push(float n) {
+
+    top++;
+    s.a[top]=n;
+
 }
 
-float pop(){
-    return s.arr[top--];  
+float pop() {
+
+    top--;
+    return s.a[top+1];
 }
+
+int isOperand(char a)
+{
+    return ( a >= '0' && a <= '9' );
+}
+
 
 float evaluate(char expression[], int len) {
-    for(int i=0;i<len;i++){
-        if(expression[i]=='+')
-            push(pop() + pop());
-        else if(expression[i]=='-'){
-            int a1=pop(),a2=pop();
-            push(a2-a1);
-        }  
-        else if(expression[i]=='*')
-            push(pop()*pop());
-        else if(expression[i]=='/'){
-            float a1=pop(),a2=pop();
-            push(a2/a1);
+
+    int i;
+    float j,a,b;
+    for(i=0;i<len;i++)
+    {
+        if(isOperand(expression[i]))
+        {
+            a=expression[i]-'0';
+            push(a);
         }
-        else
-            push(expression[i]-'0');
+        else 
+        {
+            if(expression[i]=='+')
+            {
+                a=pop();
+                b=pop();
+                push(b+a);
+            }
+            else if(expression[i]=='-')
+            {
+                a=pop();
+                b=pop();
+                push(b-a);
+            }
+            else if(expression[i]=='*')
+            {
+                a=pop();
+                b=pop();
+                push(b*a);
+            }
+            else if(expression[i]=='/')
+            {
+                a=pop();
+                b=pop();
+                push(b/a);
+            }   
+        }
     }
-    return pop();
+    j=pop();
+    return j;
 }
 
 int main() {
@@ -51,3 +83,4 @@ int main() {
     }
     return 0;
 }
+
