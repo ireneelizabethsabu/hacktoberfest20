@@ -1,67 +1,38 @@
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
+#include<stdio.h>
+#include<stdlib.h>
 
-typedef struct {
-    int arr[10];
-}Queue;
-
-Queue q;
-int front=-1,rear=-1;
-
-void enqueue(int n) {
-    if(rear==-1){
-        front=rear=0;  
-        q.arr[rear]=n;
+int main()
+{
+    int N,M,*N1,*M1,*S;
+    scanf("%d %d",&N,&M);
+    N1 = (int *)malloc((N+1)*sizeof(int)); 
+    M1 = (int *)malloc((M+1)*sizeof(int));
+    for(int i=N;i>=0;i--)
+    {
+        scanf("%d",&N1[i]);
     }
-    else if(rear<9)
-        q.arr[++rear]=n;
-}
-
-int dequeue() {
-    if(front==-1)
-        return -1;
-    else if(front == rear){
-        int temp = front;
-        front = -1;
-        rear = -1;
-        return q.arr[temp];
+    for(int i=M;i>=0;i--)
+    {
+        scanf("%d",&M1[i]);
     }
-    else
-        return q.arr[front++];
-}
-
-bool isEmpty() {
-    if(front == -1)
-        return 1;
-    return 0;   
-}
-
-bool isFull() {
-    if(rear==9 && front==0)
-        return 1;
-}
-
-int main() {
-    int q, choice, n;
-    scanf("%d", &q);
-    while(q--) {
-        scanf("%d%d", &choice, &n);
-        switch(choice) {
-            case 0: enqueue(n);
-                    break;
-            case 1: printf("%d\n", dequeue());
-                    break;
-            case 2: printf("%d\n", isEmpty());
-                    break;
-            case 3: printf("%d\n", isFull());
-                    break;
-            // case 4: ;
-            //         Stack temp;
-            //         pop(&temp);
-            //         push(&temp, n);
-            //         break;
-        }
+    int max = (N>M)? N : M;
+    S = (int *)malloc((max+1)*sizeof(int));
+    int i = 0;
+    while(i<=M && i<=N)
+    {
+        S[i] = N1[i]+M1[i];
+        i++;
     }
-    return 0;
-}
+    while(i<=N)
+    {
+        S[i]=N1[i];
+        i++;
+    }
+    while(i<=M)
+    {
+        S[i]=M1[i];
+        i++;
+    }   
+    for(int i = max;i>=0;i--)
+    printf("%d ",S[i]);
+}   
